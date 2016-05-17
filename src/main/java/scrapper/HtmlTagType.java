@@ -1,9 +1,8 @@
 package scrapper;
 
 /**
- * Full class description here.
+ * Different HTML tag types.
  * Created by Grinch on 9/21/2014.
- * scrapper
  */
 public enum HtmlTagType {
 
@@ -19,7 +18,7 @@ public enum HtmlTagType {
 
     private final String tag;
 
-    private HtmlTagType(String tag) {
+    HtmlTagType(String tag) {
         this.tag = tag;
     }
 

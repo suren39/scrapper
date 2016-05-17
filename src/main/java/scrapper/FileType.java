@@ -20,7 +20,7 @@ public enum FileType {
     public final static Set<FileType> imageTypes;
 
     static {
-        final Set<FileType> tempImageTypes = new HashSet<FileType>();
+        final Set<FileType> tempImageTypes = new HashSet<>();
         tempImageTypes.add(PNG);
         tempImageTypes.add(JPG);
         tempImageTypes.add(JPEG);
@@ -31,7 +31,7 @@ public enum FileType {
     private final String extension;
     private final String acronym;
 
-    private FileType(String extension, String acronym) {
+    FileType(String extension, String acronym) {
         this.extension = extension;
         this.acronym = acronym;
     }

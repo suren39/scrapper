@@ -1,4 +1,4 @@
-package drivers;
+package api;
 
 import scrapper.GenericScrapper;
 import scrapper.GenericScrapperJsoupImpl;
@@ -16,18 +16,21 @@ public class GenericScrapperDriver {
     public static void main(String[] args) {
 
         final GenericScrapper<String> scrapper = new GenericScrapperJsoupImpl();
+
         final List<String> aTags =
                 scrapper.getAllLinks("http://orderandchaosduels.wikia.com/wiki/Epic_Minion_Cards");
 
         final List<String> relativeURls = keepRelativeUrl(aTags);
 
-        final List<String> fullImagePath = new ArrayList<String>();
-        final List<String> trash = new ArrayList<String>();
+        final List<String> fullImagePath = new ArrayList<>();
+        final List<String> trash = new ArrayList<>();
 
         for (String link : relativeURls) {
             try {
 
-                List<String> imagesByClass = scrapper.getAllLinksByClass(link, "image-thumbnail");
+                List<String> imagesByClass =
+                        scrapper.getAllLinksByCssClass(link, "image-thumbnail");
+
                 for (String temp : imagesByClass) {
                     if (temp.contains("images")) {
                         fullImagePath.add(temp);
@@ -38,11 +41,6 @@ public class GenericScrapperDriver {
             } catch (Exception e) {
                 System.out.println("ERROR FOR: " + link);
             }
-
-/*            if (fullImagePath.size() > 15) {d
-                break;
-            }*/
-
         }
 
         for (String cleanUrl : fullImagePath) {
@@ -54,6 +52,7 @@ public class GenericScrapperDriver {
         for (String trashUrl : trash) {
             System.out.println(trashUrl);
         }
+
         scrapper.downloadAllImages(fullImagePath, "C://scrap//");
     }
 
@@ -64,19 +63,6 @@ public class GenericScrapperDriver {
         for(String link : links) {
             if (link.contains("/wiki") && !link.contains(".jpg")) {
                 fullImages.add("http://orderandchaosduels.wikia.com" + link);
-            }
-        }
-
-        return fullImages;
-    }
-
-    public static List<String> keepLargeImagesUrls(List<String> links) {
-
-        final List<String> fullImages = new ArrayList<String>();
-
-        for(String link : links) {
-            if (link.contains("http") && link.contains(".jpg")) {
-                fullImages.add(link);
             }
         }
 
